@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>User Authentication</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="newTemplate.xhtml">
+         <ui:define name="content">
+<script>
+function validateForm() {
+    var x = document.forms["myform"]["j_username"].value;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos &lt; 1 || dotpos &lt; atpos+2 || dotpos+3 &gt; x.length) {
+        alert("Not a valid e-mail address");
+        return false;
+    }
+}
+</script>
+             
+        <h1>User Authentication</h1>
+
+        <form id="myform" method="POST" onsubmit="return validateForm();" action="j_security_check">
+            <label for="j_username">Username:</label>
+            <input type="text" name="j_username" />
+            <br />
+            <br/>
+            <label for="j_password">Password:</label>
+            <input type="password" name="j_password" />
+            <input type="submit" value="Submit"/>
+        </form>
+         </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

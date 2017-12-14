@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>List of web services</title>
+    </h:head>
+    <h:body>
+        <h:form>
+           <h:panelGroup id="tableDialog" >
+               <h:dataTable id="webTable" value="#{webApplication.webServices}"  border="1" 
+                             var="webs"     styleClass="css/tablecss.css">
+                <h:column>
+                        <f:facet name="header"> Service Name </f:facet>
+                        <h:outputText value="#{webs.servicename}" />
+                 </h:column> 
+                <h:column>
+                    <f:facet name="header"> Service Type </f:facet>
+                    <h:outputText value="#{webs.servicetype}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Service Description </f:facet>
+                    <h:outputText value="#{webs.description}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Service Thumbnail </f:facet>
+                    <h:graphicImage value="#{webs.thumbnail}">
+                    </h:graphicImage>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Selected </f:facet>
+                    <h:commandButton value="select" action="#{webApplication.addService(webs)}" />
+                </h:column>
+            </h:dataTable>   
+            <h:link value="Go Back" outcome="/worker/worker"/>  
+            </h:panelGroup>
+        </h:form>
+    </h:body>
+</html>
+

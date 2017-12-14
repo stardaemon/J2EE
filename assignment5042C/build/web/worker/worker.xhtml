@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>worker page</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="workerTemplate.xhtml">
+            <ui:define name="content">               
+                    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+                    <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+                    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" />
+                    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+                    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+                    <script type="text/javascript">
+                    
+                        $("#myform:tableDialog").dialog({
+                            autoOpen: false,
+                            title: "Web Service Data",
+                            show: "blind",
+                            hide: "explode",
+                            modal: true,
+                            width: 500
+                        });
+
+                        $("#myform:webTable").dataTable({
+                            bJQueryUI: true
+                        });
+
+                        $("#myform:dialog").click(function() {
+                        var target = $(this);
+                        $("#myform:tableDialog").dialog("open");
+                        $("#myform:tableDialog").show();
+                        $("#myform:tableDialog").dialog("widget").position({
+                            my: 'left top',
+                            at: 'left bottom',
+                            of: target
+                            });
+                        });
+                    
+                    </script>
+                
+                
+        <header>
+            <h1>Worker Space</h1> 
+        </header>    
+            <h2>View, Update, Add and delete SERVERS</h2>
+            <p>Type the necessary info for add, edit and delete, then click on matching button.</p>
+            
+            <!-- Service No. input -->
+            <h:form id="myform">
+                <p>Service no: <h:message for="serviceid" styleClass="error"/></p>
+                <h:inputText id="serviceId" label ="Service Id"  value="#{workerApplication.serviceId}" required="false" >
+                </h:inputText>        
+                        
+            <!-- Service Name input -->
+             
+                <p>Service Name: <h:message for="servicename" styleClass="error" /></p>             
+                <h:inputText id="serviceName" label="Service Name" size="32" value="#{workerApplication.serviceName}" required="false">
+                </h:inputText>
+           
+            <!-- Service type input -->
+                <p>Service type: <h:message for="servicetype" styleClass="error" /></p>
+                <!--h:inputText id="serviceType" label="Service Type" size="32" value="#{workerApplication.serviceType}" required="false"-->
+                <!--/h:inputText--> 
+                
+                <h:selectOneMenu value="#{workerApplication.serviceType}">
+                    <f:selectItem itemValue="available" itemLabel="available" />
+                    <f:selectItem itemValue="nonavailable" itemLabel="nonavailable" />
+                </h:selectOneMenu>
+
+            <!-- Service Thumbnail input -->
+                <p>Service Thumbnail: <h:message for="servicethum" styleClass="error" /></p>
+                <h:inputText id="serviceThumbnail" label="Service Thumbnail" size="32" value="#{workerApplication.serviceThum}" required="false">
+                </h:inputText> 
+ 
+            <!-- Service type input -->
+                <p>Service Description: <h:message for="servicedes" styleClass="error" /></p>
+                <h:inputText id="serviceDes" label="Service Description" size="32" value="#{workerApplication.serviceDes}" required="false">
+                </h:inputText> 
+            
+            <!-- Form submit button -->
+            <br/>
+            <br/>
+            <h:commandButton id="findAll" value="Find All" action="#{workerApplication.findAllServices()}" />
+            <h:commandButton id="addNew" value="Add New" action="#{workerApplication.addService()}" />
+            <h:commandButton id="updateOne" value="Update One" action="#{workerApplication.updateService()}" />
+            <h:commandButton id="deleteOne" value="Delete One" action="#{workerApplication.delService()}" />
+            <h:button id="dialog" value="Add from Web" outcome="webservice" />
+            <h:panelGroup id="tableDialog" style="display:none">
+                <h:dataTable id="webTable" value="#{workerApplication.webServices}"  border="1" 
+                             var="webs"     styleClass="css/tablecss.css">
+                <h:column>
+                        <f:facet name="header"> Service Name </f:facet>
+                        <h:outputText value="#{webs.servicename}" />
+                 </h:column> 
+                <h:column>
+                    <f:facet name="header"> Service Type </f:facet>
+                    <h:outputText value="#{webs.servicetype}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Service Description </f:facet>
+                    <h:outputText value="#{webs.description}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Selected </f:facet>
+                    <h:commandButton value="select" action="#{workerApplication.selected(webs)}" />
+                </h:column>
+            </h:dataTable>                
+            </h:panelGroup>
+
+                <h:dataTable value="#{workerApplication.services}"  border="1" 
+                             var="services"     styleClass="css/tablecss.css">
+                <h:column>
+                        <f:facet name="header"> Service ID </f:facet>
+                        <h:outputText value="#{services.serviceid}" />
+                </h:column>
+                <h:column>
+                        <f:facet name="header"> Service Name </f:facet>
+                        <h:outputText value="#{services.servicename}" />
+                 </h:column> 
+                <h:column>
+                    <f:facet name="header"> Service Type </f:facet>
+                    <h:outputText value="#{services.servicetype}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Service Description </f:facet>
+                    <h:outputText value="#{services.description}" />
+                </h:column>
+            </h:dataTable>  
+            </h:form> 
+                       
+            </ui:define>
+                </ui:composition>
+    </h:body>
+</html>
+

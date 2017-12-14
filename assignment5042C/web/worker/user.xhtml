@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>worker page</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="workerTemplate.xhtml">
+        <ui:define name="content">
+        <header>
+            <h1>Worker Space</h1> 
+        </header>   
+        
+            <h2>View, Update, Add and delete Users</h2>
+            <p>Type the necessary info for add, edit and delete, then click on matching button.</p>
+            
+            <!-- User No.-->
+            <h:form>
+                <p>User no: <h:message for="userid" styleClass="error"/></p>
+                <h:inputText id="userid" label ="User Id"  value="#{userApplication.id}" required="false" readonly="true" >
+                </h:inputText>        
+                        
+            <!-- User Last Name input -->             
+                <p>User Last Name: <h:message for="lastname" styleClass="error" /></p>             
+                <h:inputText id="lastname" label="Last Name" size="32" value="#{userApplication.lastname}" required="false">
+                </h:inputText>
+           
+             <!-- User First Name input -->             
+                <p>User First Name: <h:message for="firstname" styleClass="error" /></p>             
+                <h:inputText id="firstname" label="First Name" size="32" value="#{userApplication.firstname}" required="false">
+                </h:inputText>   
+                
+            <!-- User type select -->
+                <p>User type: <h:message for="usertype" styleClass="error" /></p>
+                <h:selectOneMenu value="#{userApplication.usertype}">
+                    <f:selectItem itemValue="public" itemLabel="public" />
+                    <f:selectItem itemValue="government worker" itemLabel="government worker" />
+                </h:selectOneMenu>
+
+            <!-- user phone number input -->
+                <p>User Phone Number: <h:message for="usernumber" styleClass="error" /></p>
+                <h:inputText id="usernumber" label="User Phone Number" size="32" value="#{userApplication.phonenumber}" required="false">
+                </h:inputText> 
+ 
+            <!-- user address input -->
+                <p>User Address <h:message for="address" styleClass="error" /></p>
+                <h:inputText id="useraddress" label="User Address" size="32" value="#{userApplication.address}" required="false">
+                </h:inputText> 
+            
+            <!-- user email input -->
+                <p>User Email <h:message for="email" styleClass="error" /></p>
+                <h:inputText id="useremail" label="User Email" size="32" value="#{userApplication.email}" required="false">
+                </h:inputText>     
+                
+              <!-- user password input -->
+                <p>User Password <h:message for="password" styleClass="error" /></p>
+                <h:inputText id="userpassword" label="User Password" size="32" value="#{userApplication.password}" required="false">
+                </h:inputText>    
+                
+            <!-- Form submit button -->
+            <br/>
+            <br/>
+            <h:commandButton id="findAll" value="Find All" action="#{userApplication.findAllUsers()}" />
+            <h:commandButton id="findCombine" value="Find By Info" action="#{userApplication.findUserCom()}" />
+            <h:commandButton id="addNew" value="Add New" action="#{userApplication.addUser()}" />
+            <h:commandButton id="updateOne" value="Update One" action="#{userApplication.updateUserInfo()}" />
+            <h:commandButton id="clear" value="Clear" action="#{userApplication.clear()}" />
+            
+            
+            <h:dataTable value="#{userApplication.userList}"  border="1" 
+                             var="users"     styleClass="css/tablecss.css">
+                <h:column>
+                        <f:facet name="header"> User ID </f:facet>
+                        <h:outputText value="#{users.id}" />
+                </h:column>
+                <h:column>
+                        <f:facet name="header"> User Last Name </f:facet>
+                        <h:outputText value="#{users.lastname}" />
+                 </h:column> 
+                <h:column>
+                    <f:facet name="header"> User First Name </f:facet>
+                    <h:outputText value="#{users.firstname}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> User Address </f:facet>
+                    <h:outputText value="#{users.address}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> User Phone Number </f:facet>
+                    <h:outputText value="#{users.phonenumber}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> User Email </f:facet>
+                    <h:outputText value="#{users.email}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> User Type </f:facet>
+                    <h:outputText value="#{users.usertype}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Select Users  </f:facet>
+                    <h:commandButton value="select" action="#{userApplication.selectedUser(users)}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header"> Delete User </f:facet>
+                    <h:commandButton value="delete" action="#{userApplication.delUser(users.id)}" />
+                </h:column>
+            </h:dataTable>  
+            </h:form> 
+                       
+            </ui:define>
+                </ui:composition>
+    </h:body>
+</html>
+

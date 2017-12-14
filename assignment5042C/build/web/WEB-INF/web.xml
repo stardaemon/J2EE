@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>public/search.xhtml</welcome-file>
+        <welcome-file>faces/public/search.xhtml</welcome-file>
+    </welcome-file-list>
+    <mime-mapping>
+        <extension>xhtml</extension>
+        <mime-type>application/xml</mime-type>
+    </mime-mapping>
+    <security-constraint>
+        <display-name>Public</display-name>
+        <web-resource-collection>
+            <web-resource-name>WebResource</web-resource-name>
+            <description/>
+            <url-pattern>/public/*</url-pattern>
+            <url-pattern>/faces/public/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>public</description>
+            <role-name>public</role-name>
+            <role-name>government worker</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>government worker</display-name>
+        <web-resource-collection>
+            <web-resource-name>government worker</web-resource-name>
+            <description/>
+            <url-pattern>/worker/*</url-pattern>
+            <url-pattern>/faces/worker/*</url-pattern>
+            <url-pattern>/public/*</url-pattern>
+            <url-pattern>/faces/public/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>government worker</description>
+            <role-name>government worker</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>JDBC_Security</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/login.xhtml</form-login-page>
+            <form-error-page>/faces/error.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>public</description>
+        <role-name>public</role-name>
+    </security-role>
+    <security-role>
+        <description>government worker</description>
+        <role-name>government worker</role-name>
+    </security-role>
+</web-app>
